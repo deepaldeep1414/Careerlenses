@@ -43,7 +43,7 @@ def extract_jd_keywords(jd_text: str) -> dict:
     for attempt in range(3):
         try:
             response = client.chat.completions.create(
-                model="llama-3.3-70b-versatile",
+                model="llama-3.1-8b-instant",
                 messages=[
                     {"role": "user", "content": prompt}
                 ],
