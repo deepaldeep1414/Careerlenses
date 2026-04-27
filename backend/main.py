@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from routers import jd  # ADD THIS
 
 app = FastAPI(title="CareerLens API")
 
@@ -14,6 +15,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(jd.router)  # ADD THIS
+
 @app.get("/")
 def root():
-    return {"message": "CareerLens is alive "}
+    return {"message": "CareerLens is alive 🚀"}
