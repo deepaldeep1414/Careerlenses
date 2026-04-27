@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import jd  # ADD THIS
+from routers import jd
+from routers import resume  # ADD THIS
 
 app = FastAPI(title="CareerLens API")
 
@@ -15,7 +16,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(jd.router)  # ADD THIS
+app.include_router(jd.router)
+app.include_router(resume.router)  # ADD THIS
 
 @app.get("/")
 def root():
