@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE = import.meta.env.VITE_API_URL 
+const BASE = import.meta.env.VITE_API_URL
           || "http://localhost:8000";
 
 export const analyzeJD = (text) =>
@@ -15,18 +15,24 @@ export const scanResume = (file) => {
 };
 
 export const calculateScore = (resumeText, jdData) =>
-  axios.post(`${BASE}/score/calculate`, {
+  axios.post(`${BASE}/score/ats`, {
     resume_text: resumeText,
-    must_have: jdData.must_have_skills,
-    nice_to_have: jdData.nice_to_have_skills,
+    must_have_skills: jdData.must_have_skills,
+    nice_to_have_skills: jdData.nice_to_have_skills,
     top_keywords: jdData.top_keywords
   });
 
-export const enhanceResume = (resumeText, missingKeywords, jobTitle) =>
-  axios.post(`${BASE}/enhance/resume`, {
+export const enhanceResume = (
+  resumeText,
+  missingKeywords,
+  jobTitle,
+  structuredResume
+) =>
+  axios.post(`${BASE}/enhance/`, {
     raw_text: resumeText,
     missing_keywords: missingKeywords,
-    job_title: jobTitle
+    job_title: jobTitle,
+    structured_resume: structuredResume
   });
 
 export const generateDocx = (data) =>
