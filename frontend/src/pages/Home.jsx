@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Home() {
   const navigate = useNavigate();
+  const { user, logout } = useContext(AuthContext);
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
@@ -15,14 +18,42 @@ export default function Home() {
             Career<span className="text-blue-400">Lenses</span>
           </span>
         </div>
-        <button
-          onClick={() => navigate("/analyze")}
-          className="bg-blue-600 hover:bg-blue-700 
-                     text-white text-sm font-semibold 
-                     px-5 py-2 rounded-lg transition-all"
-        >
-          Get Started →
-        </button>
+        <div className="flex gap-4 items-center">
+          {user ? (
+            <>
+              <span className="text-gray-400 text-sm hidden sm:block">
+                {user.email}
+              </span>
+              <button
+                id="nav-logout-btn"
+                onClick={logout}
+                className="border border-gray-700 hover:border-red-700 
+                           text-gray-300 hover:text-red-400 font-semibold 
+                           px-4 py-2 rounded-lg text-sm transition-all"
+              >
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <button
+              id="nav-login-btn"
+              onClick={() => navigate("/login")}
+              className="text-gray-300 hover:text-white font-semibold 
+                         px-5 py-2 transition-all"
+            >
+              Sign In
+            </button>
+          )}
+          <button
+            id="nav-get-started-btn"
+            onClick={() => navigate("/analyze")}
+            className="bg-blue-600 hover:bg-blue-700 
+                       text-white text-sm font-semibold 
+                       px-5 py-2 rounded-lg transition-all"
+          >
+            Get Started →
+          </button>
+        </div>
       </nav>
 
       {/* Hero Section */}

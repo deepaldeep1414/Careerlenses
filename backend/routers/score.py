@@ -1,8 +1,9 @@
 # backend/routers/score.py
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from typing import List
 from services.ats_scorer import calculate_ats_score
+from utils.security import get_current_user
 
 router = APIRouter(prefix="/score", tags=["Score"])
 
@@ -13,7 +14,10 @@ class ScoreRequest(BaseModel):
     top_keywords: List[str]
 
 @router.post("/ats")
-def ats_score(payload: ScoreRequest):
+def ats_score(
+    payload: ScoreRequest,
+    _: dict = Depends(get_current_user),   # 🔒 JWT required
+):
     return calculate_ats_score(
         resume_text=payload.resume_text,
         must_have=payload.must_have_skills,

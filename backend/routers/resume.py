@@ -1,14 +1,17 @@
-from fastapi import APIRouter, UploadFile, HTTPException
+from fastapi import APIRouter, UploadFile, HTTPException, Depends
 from services.pdf_parser import parse_resume
 from utils.file_handler import save_upload
+from utils.security import get_current_user
 
 router = APIRouter(prefix="/resume", tags=["Resume"])
 
 ALLOWED_TYPES = ["application/pdf"]
 
 @router.post("/scan")
-async def scan_resume(file: UploadFile):
-    # Blindspot 4: extension check alone is bypassable
+async def scan_resume(
+    file: UploadFile,
+    _: dict = Depends(get_current_user),   # 🔒 JWT required
+):
     if file.content_type not in ALLOWED_TYPES:
         raise HTTPException(400, "PDF files only.")
     if not file.filename.lower().endswith(".pdf"):
