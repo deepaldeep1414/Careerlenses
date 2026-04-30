@@ -1,7 +1,41 @@
 venv/
 backend/venv/
+
+# Environment variables
 .env
 backend/.env
+frontend/.env
+
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# GSD planning directory
+.planning/
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# Build outputs
+frontend/dist/
+frontend/node_modules/
+
+# Uploads / generated outputs
+backend/uploads/
+backend/outputs/
+
+# Logs
+*.log
